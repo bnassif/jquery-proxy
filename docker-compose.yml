@@ -1,0 +1,7 @@
+services:
+  jquery-proxy:
+    image: ghcr.io/bnassif/jquery-proxy
+    restart: unless-stopped
+    command: --cache-size 750MB
+    ports:
+      - "8080:8080"
