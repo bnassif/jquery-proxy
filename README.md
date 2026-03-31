@@ -1,48 +1,18 @@
 # jQuery Proxy
 
-A simple web proxy that allows end users to perform jQuery operations against an HTTP(S) endpoint with caching.
+A simple web proxy that allows users to perform jQuery operations against an HTTP(S) endpoint with caching.
 
 ## Overview
 
 This application provides an OS-agnostic method for performing reliable jQuery expressions against remote HTTP(S) endpoints.
 
-Originally designed to offer an easy method for parsing and returning JSON data as standard HTML for XXsense firewall systems, it enables dynamic loading of Alias contents.
+Originally designed to offer an easy method for parsing JSON data for firewalls to obtain IP lists for services published in JSON format, it enables dynamic loading of Alias contents.
 
 ### Details
 
 The application accepts a URL and an xPath query to execute against JSON data retrieved from the URL. The parsed data is returned to the user, enabling JSON filtering without requiring a local package like `jq`.
 
-Before making a request, the application checks its built-in cache for a response, optimizing performance by returning cached responses when available.
-
-## Usage
-
-### Query Parameters
-
-The parameters supplied to the application must be GET path parameters and must be URL-encoded.
-
-| Name     | Required | Description                                                              |
-|----------|----------|--------------------------------------------------------------------------|
-| `url`    | Yes      | The target URL from which to pull JSON data for querying.                |
-| `query`  | No       | The xPath query to execute against the JSON data.                        |
-| `all`    | No       | Determines whether the application should perform `Query` or `QueryAll`. |
-
-### Examples
-
-#### GitHub API
-
-- **url**: `https://api.github.com/meta`
-- **query**: `hooks`
-
-`http://<hostname>[:<port>]/?url=https%3A%2F%2Fapi.github.com%2Fmeta&query=<section e.g. hooks>`
-
-
-#### Google API
-
-- **url**: `https://www.gstatic.com/ipranges/goog.json`
-- **query**: `//ipv4Prefix`
-- **all**: `true`
-
-`http://<hostname>[:<port>]/?url=https%3A%2F%2Fwww.gstatic.com%2Fipranges%2Fgoog.json&query=%2F%2Fipv4Prefix&all=true`
+Redis caching is supported and recommended to prevent too many outbound requests that may lead to rate-limiting.
 
 ## Deployment
 

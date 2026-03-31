@@ -1,5 +1,5 @@
 # Go executables and packages
-artifact/
+dist/
 
 # Test binary, built with `go test -c`
 *.test

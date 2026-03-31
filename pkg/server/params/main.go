@@ -1,18 +1,21 @@
-package app
+package params
 
 import (
 	"fmt"
 	"net/url"
 )
 
-type QueryParams struct {
+type Params struct {
 	URL   url.URL
 	Query string
 	All   bool
 }
 
-func (q *QueryParams) parseFromURL(u *url.URL) (err error) {
-	// Parse the URL Query Parameters
+func NewParams(u *url.URL) (params *Params, err error) {
+	var reqUrl *url.URL
+	var reqQuery string
+	var reqAll bool
+
 	p := u.Query()
 
 	// Ensure the url parameter is present
@@ -28,26 +31,25 @@ func (q *QueryParams) parseFromURL(u *url.URL) (err error) {
 	}
 
 	// Parse the raw URL string
-	u, err = url.Parse(rawUrl)
+	reqUrl, err = url.Parse(rawUrl)
 	if err != nil {
 		return
 	}
 
-	// Set the URL
-	q.URL = *u
-
 	// Parse the optional `query` and `contains` parameters
 	if p.Has("query") {
-		q.Query, err = url.QueryUnescape(p.Get("query"))
+		reqQuery, err = url.QueryUnescape(p.Get("query"))
 		if err != nil {
-			return
+			return nil, err
 		}
 
 		// Assess the `all` parameter if query is present
-		if p.Has("all") && p.Get("all") == "true" {
-			q.All = true
-		}
+		reqAll = p.Has("all") && p.Get("all") == "true"
 	}
 
-	return
+	return &Params{
+		URL:   *reqUrl,
+		Query: reqQuery,
+		All:   reqAll,
+	}, nil
 }
