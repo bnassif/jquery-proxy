@@ -14,4 +14,5 @@ USER app
 
 EXPOSE 8080
 
-ENTRYPOINT ["/jquery-proxy"]
+ENTRYPOINT [ "/jquery-proxy" ]
+CMD [ "run" ]

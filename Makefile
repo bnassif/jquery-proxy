@@ -25,7 +25,7 @@ BIN_OUT      := $(OUT_DIR)/$(BIN)
 export CGO_ENABLED ?= 0
 GOOS   ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
-LDFLAGS := -X $(MODULE_PATH)/app.Version=$(VERSION)
+LDFLAGS := -X $(MODULE_PATH)/pkg.Version=$(VERSION)
 
 # ---- Image ----
 IMAGE ?= ghcr.io/bnassif/jquery-proxy
@@ -35,8 +35,6 @@ DOCKER_FILE := Dockerfile
 DOCKER_EXPORT := "$(OUT_DIR)/$(BIN)_$(VERSION).tar"
 
 DOCKER_FLAGS := -t $(IMAGE):$(TAG) -f $(DOCKER_FILE) --label "Version=$(VERSION)"
-DOCKERX_FLAGS := $(BUILD_FLAGS) --platform $(PLATFORMS)
-
 
 .DEFAULT_GOAL := help
 
